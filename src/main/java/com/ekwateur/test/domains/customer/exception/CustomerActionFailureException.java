@@ -5,8 +5,4 @@ public class CustomerActionFailureException extends RuntimeException {
     public CustomerActionFailureException(String message) {
         super(message);
     }
-
-    public CustomerActionFailureException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

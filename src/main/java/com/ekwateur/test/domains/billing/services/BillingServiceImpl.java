@@ -19,14 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BillingServiceImpl implements BillingService {
-
-    private final double LIMIT_CA = 1000000;
 
     private final BillingRepository billingRepository;
     private final ConsumptionRepository consumptionRepository;
@@ -85,11 +82,11 @@ public class BillingServiceImpl implements BillingService {
         if (CustomerType.PARTICULAR.equals(customerType))
             return null;
         ProCustomerDTO pro = (ProCustomerDTO) customer;
-        return pro.getTurnover() >= LIMIT_CA ? TurnoverRange.MORE_THAN_ONE : TurnoverRange.LESS_THAN_ONE;
+        return pro.getTurnover() >= 1000000 ? TurnoverRange.MORE_THAN_ONE : TurnoverRange.LESS_THAN_ONE;
     }
 
     @Override
     public List<BillingDTO> retrieveBilling() {
-        return billingRepository.findAll().stream().map(BillingMapper::map).collect(Collectors.toList());
+        return billingRepository.findAll().stream().map(BillingMapper::map).toList();
     }
 }

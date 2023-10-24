@@ -5,7 +5,6 @@ import com.ekwateur.test.domains.customer.dto.CustomerDTO;
 import com.ekwateur.test.domains.customer.dto.ProCustomerDTO;
 import com.ekwateur.test.domains.customer.entities.ProCustomerEntity;
 import com.ekwateur.test.domains.customer.enums.CustomerType;
-import com.ekwateur.test.domains.customer.exception.CustomerActionFailureException;
 import com.ekwateur.test.domains.customer.mapper.CustomerMapper;
 import com.ekwateur.test.domains.customer.repositories.ProCustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +24,8 @@ public class ProCostumerHandler extends CustomerHandler {
     public String handleCreate(CreateCustomerDTO create) {
         if (!CustomerType.PARTICULAR.equals(create.getType()))
             handleCreateNext(create);
-        if (!isDataValid(create))
-            throw new CustomerActionFailureException("Data for particular account not valid");
         ProCustomerEntity entity = CustomerMapper.toProEntity(create, generateRefClient());
         return repository.save(entity).getRefClient();
-    }
-
-    private boolean isDataValid(CreateCustomerDTO create) {
-        return true;
     }
 
     @Override
